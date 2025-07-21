@@ -2,79 +2,96 @@
 
 ## Overview
 
-This project is a React-based web app for managing a songs list. It provides functionalities such as listing, editing, deleting songs, pagination, and smooth UI/UX enhancements.
+**Song Management App** is a full-stack application for managing a list of songs. It provides a user-friendly interface for listing, adding, editing, and deleting songs, with pagination and smooth UI/UX enhancements. The app is split into a React frontend and a Node.js/Express backend, managed as a monorepo.
+
+---
+
+## Monorepo Structure
+
+This project uses a monorepo structure with two main directories:
+
+- `client/` – React frontend (Webpack, runs on port 3001 for development)
+- `server/` – Node.js backend (Express, runs on port 5000)
+
+```
+song-management-app/
+│
+├── client/   # React frontend
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── webpack.config.js
+│
+├── server/   # Node backend
+│   ├── routes/
+│   ├── controllers/
+│   ├── server.js
+│   └── package.json
+│
+└── README.md
+```
 
 ---
 
 ## Setup Instructions
 
-1. **Clone the repository**
+### 1. Clone the repository
 
-   ```bash
-   git clone https://github.com/asm2212/song-management-app.git
-   cd song-management-app
-   ```
+```bash
+git clone https://github.com/asm2212/song-management-app.git
+cd song-management-app
+```
 
-2. **Install dependencies**
+### 2. Backend Setup (`server`)
 
-   Using npm:
+```bash
+cd server
+npm install
+npm run dev
+# The server will start at http://localhost:5000
+```
 
-   ```bash
-   npm install
-   ```
+- The backend is an Express.js server.
+- By default, it runs on **port 5000**.
+- API endpoints are used by the frontend for CRUD operations on songs.
 
-   Or yarn:
+### 3. Frontend Setup (`client`)
 
-   ```bash
-   yarn install
-   ```
+Open a new terminal window/tab in the project root and run:
 
-3. **Start development server**
+```bash
+cd client
+npm install
+npm start
+# The React app will start at http://localhost:3001
+```
 
-   ```bash
-   npm start
-   ```
-
-   The app will be available at `http://localhost:3000` by default.
-
-4. **Build for production**
-
-   ```bash
-   npm run build
-   ```
-
-   This generates optimized assets in the `dist/` directory.
+- The frontend is a React app bundled with Webpack.
+- By default, it runs on **port 3001**.  
+- The Webpack dev server proxies API requests to the backend (update API URLs if needed).
 
 ---
 
-## Webpack Configuration Explained
+## Webpack Configuration (Frontend)
 
-Our project uses **Webpack 5** as the module bundler to efficiently bundle and serve the React app with hot-reloading and optimized builds.
+The React frontend uses **Webpack 5** for bundling and development.
 
-### Key points of the Webpack setup:
+### Key features:
 
-* **Entry point:** `src/index.jsx` is the main entry where the React app boots.
+- **Entry Point:** `src/index.jsx`
+- **Output:** Bundled assets are output to `dist/`, with content hashing for cache busting.
+- **Loaders:**  
+  - `babel-loader` for modern JS/JSX
+  - `style-loader` and `css-loader` for CSS
+  - Asset modules for images/fonts
+- **Plugins:**  
+  - `HtmlWebpackPlugin` injects the bundle into `public/index.html`
+  - `HotModuleReplacementPlugin` for fast refresh in development
+- **Dev Server:**  
+  - Runs on `localhost:3001` with HMR (hot module replacement)
+  - Serves static files, falls back to `index.html` for SPA routes
 
-* **Output:** Bundled assets are output to the `dist/` folder, with content hashing to support long-term caching.
-
-* **Loaders:**
-  * `babel-loader` transpiles modern JS/JSX syntax to browser-compatible JS.
-  * `style-loader` and `css-loader` handle styles.
-  * `file-loader` or `asset modules` handle static assets like images and fonts.
-
-* **Plugins:**
-  * `HtmlWebpackPlugin` automatically injects the JS bundle into the `index.html`.
-  * `HotModuleReplacementPlugin` enables hot reloading during development.
-
-* **Development mode:**
-  * Source maps are enabled for better debugging.
-  * Dev server runs with live reload and HMR on `localhost:3000`.
-
-* **Production mode:**
-  * JS and CSS assets are minified and optimized.
-  * Content hashes in filenames enable effective cache busting.
-
-### Example snippet of `webpack.config.js` for reference:
+#### Example `webpack.config.js` snippet:
 
 ```js
 const path = require('path');
@@ -109,7 +126,7 @@ module.exports = {
     static: './dist',
     hot: true,
     open: true,
-    port: 3000,
+    port: 3001,
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -119,15 +136,48 @@ module.exports = {
 
 ---
 
+## Running the App
+
+1. **Start the backend:**
+
+    ```bash
+    cd server
+    npm install
+    npm run dev
+    # Server: http://localhost:5000
+    ```
+
+2. **Start the frontend:**
+
+    ```bash
+    cd client
+    npm install
+    npm start
+    # Frontend: http://localhost:3001
+    ```
+
+3. **Open your browser to** [http://localhost:3001](http://localhost:3001)
+
+- Make sure both the backend and frontend are running for full functionality.
+- The frontend is configured to communicate with the backend API on port 5000.
+
+---
+
 ## AI Usage Explanation
 
 This project leverages AI capabilities **via OpenAI's GPT-4 model** for:
 
-* **Code generation and refactoring:** To speed up development and maintain clean, optimized code.
-* **UX improvements:** Suggesting UI/UX best practices based on AI recommendations.
-* **Documentation assistance:** Generating and improving project documentation, comments, and explanations.
+- **Code generation and refactoring:** To speed up development and maintain clean, optimized code.
+- **UX improvements:** Suggesting UI/UX best practices based on AI recommendations.
+- **Documentation assistance:** Generating and improving project documentation, comments, and explanations.
 
-The AI integration is **external to the application runtime** and used solely as a developer productivity tool during development.
+> **Note:** The AI integration is **external to the application runtime** and used solely as a developer productivity tool during development.
+
+---
+
+## License
+
+MIT
 
 ---
 
